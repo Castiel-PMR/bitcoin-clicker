@@ -5,96 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bitcoin Mining Clicker Game</title>
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: #282c34;
-            color: white;
-            font-family: Arial, sans-serif;
-        }
-        #game-container {
-            position: relative;
-            width: 200px;
-            height: 200px;
-        }
-        #click-area {
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            left: -20%;
-            top: -30%;
-            cursor: pointer;
-            z-index: 5;
-            background: transparent;
-            border: none;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-        #pickaxe {
-            position: absolute;
-            width: 120px;
-            height: auto;
-            left: 15%;
-            top: -20%;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-            z-index: 4;
-            transform: translate(-50%, 0);
-        }
-        #bitcoin {
-            position: absolute;
-            width: 165px;
-            height: 200px;
-            bottom: 0;
-            left: 12%;
-            transform: translateX(-50%);
-            z-index: 1;
-        }
-        #rock {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 3;
-            transition: transform 0.1s ease;
-        }
-        #sparks {
-            position: absolute;
-            width: 90px;
-            height: 120px;
-            background: url('sparks.png') no-repeat center center;
-            background-size: cover;
-            top: 28%;
-            left: 32%;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            pointer-events: none;
-            z-index: 6;
-        }
-        #counter {
-            margin-top: 20px;
-            font-size: 24px;
-        }
-        .spark-animation {
-            animation: spark 0.3s forwards;
-        }
-        @keyframes spark {
-            0% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -50%) scale(1.5);
-            }
-        }
+        /* Your existing styles */
     </style>
 </head>
 <body>
@@ -138,9 +49,11 @@
                 console.log('Loading user data...');
                 const response = await fetch(`${API_BASE_URL}/api/load/${userId}`);
                 const userData = await response.json();
-                count = userData.btcCount;
-                counter.textContent = `BTC: ${count.toFixed(3)}`;
-                console.log('User data loaded:', userData);
+                console.log('Loaded user data:', userData);
+                if (userData.btcCount !== undefined) {
+                    count = userData.btcCount;
+                    counter.textContent = `BTC: ${count.toFixed(3)}`;
+                }
             } catch (error) {
                 console.error('Error loading user data:', error);
             }
