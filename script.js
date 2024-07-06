@@ -25,7 +25,6 @@ if (!userId) {
 
 const clickArea = document.getElementById('click-area');
 const pickaxe = document.getElementById('pickaxe');
-const bitcoin = document.getElementById('bitcoin');
 const rock = document.getElementById('rock');
 const counter = document.getElementById('counter');
 const clickSound = document.getElementById('click-sound');
