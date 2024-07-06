@@ -130,17 +130,17 @@
         const clickSound = document.getElementById('click-sound');
         const sparks = document.getElementById('sparks');
         async function loadUserData() {
-            try {
-                console.log('Loading user data...');
-                const response = await fetch(`${API_BASE_URL}/api/load/${userId}`);
-                const userData = await response.json();
-                count = userData.btcCount;
-                counter.textContent = `BTC: ${count.toFixed(3)}`;
-                console.log('User data loaded:', userData);
-            } catch (error) {
-                console.error('Error loading user data:', error);
-            }
-        }
+    try {
+        console.log('Loading user data...');
+        const response = await fetch(`${API_BASE_URL}/api/load/${userId}`);
+        const userData = await response.json();
+        count = userData.btcCount;
+        counter.textContent = `BTC: ${count.toFixed(3)}`;
+        console.log('User data loaded:', userData);
+    } catch (error) {
+        console.error('Error loading user data:', error);
+    }
+}
         async function saveUserData() {
             try {
                 console.log('Saving user data...');
