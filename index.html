@@ -138,9 +138,9 @@
                 console.log('Loading user data...');
                 const response = await fetch(`${API_BASE_URL}/api/load/${userId}`);
                 const userData = await response.json();
-                console.log('User data loaded:', userData);
                 count = userData.btcCount;
                 counter.textContent = `BTC: ${count.toFixed(3)}`;
+                console.log('User data loaded:', userData);
             } catch (error) {
                 console.error('Error loading user data:', error);
             }
@@ -169,25 +169,20 @@
                 return;
             }
             lastClickTime = currentTime;
-
             count += incrementValue;
             counter.textContent = `BTC: ${count.toFixed(3)}`;
             clickSound.currentTime = 0;
             clickSound.play();
-
             saveUserData();
-
             sparks.style.opacity = '1';
             sparks.style.transform = 'translate(-50%, -50%) scale(1)';
             sparks.classList.add('spark-animation');
-
             pickaxe.style.transform = 'translate(-50%, 0) rotate(45deg)';
             setTimeout(() => {
                 pickaxe.style.transform = 'translate(-50%, 0) rotate(0deg)';
                 sparks.style.opacity = '0';
                 sparks.classList.remove('spark-animation');
             }, 100);
-
             rock.style.transform = 'translateX(-50%) rotate(-5deg)';
             setTimeout(() => {
                 rock.style.transform = 'translateX(-50%) rotate(5deg)';
