@@ -42,9 +42,9 @@ body, html {
 }
 #rock {
     position: absolute;
-    width: 255px;
+    width: 250px;
     height: auto;
-    bottom: -50%; /* Подкорректируем позицию */
+    bottom: -45%; /* Подкорректируем позицию */
     left: 70%; /* Центрируем по горизонтали */
     transform: translateX(-50%);
     z-index: 3;
