@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Mining Clicker Game</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #282c34;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        #game-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        #click-area {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            left: -20%;
+            top: -30%;
+            cursor: pointer;
+            z-index: 5;
+            background: transparent;
+            border: none;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        #pickaxe {
+            position: absolute;
+            width: 120px;
+            height: auto;
+            left: 15%;
+            top: -20%;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            z-index: 4;
+            transform: translate(-50%, 0);
+        }
+
+        #bitcoin {
+            position: absolute;
+            width: 165px;
+            height: 200px;
+            bottom: 0;
+            left: 12%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        #rock {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            transition: transform 0.1s ease;
+        }
+
+        #sparks {
+            position: absolute;
+            width: 90px;
+            height: 120px;
+            background: url('sparks.png') no-repeat center center;
+            background-size: cover;
+            top: 28%;
+            left: 32%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 6;
+        }
+
+        #counter {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+
+        .spark-animation {
+            animation: spark 0.3s forwards;
+        }
+
+        @keyframes spark {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1.5);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game-container">
+        <div id="click-area"></div>
+        <img id="pickaxe" src="pickaxe.png" alt="Pickaxe">
+        <img id="bitcoin" src="bitcoin.png" alt="Bitcoin">
+        <img id="rock" src="rock.png" alt="Rock">
+        <div id="sparks"></div>
+    </div>
+    <div id="counter">BTC: 0.000</div>
+
+    <audio id="click-sound" src="click.mp3" preload="auto"></audio>
+
+    <script>
+        const API_BASE_URL = "https://11aa-95-153-90-59.ngrok-free.app/api";  // Обновите на правильный URL, предоставленный ngrok
+
+        let count = 0.0;
+        let lastClickTime = 0;
+        const clickInterval = 150;
+        const incrementValue = 0.001;
+
+        // Function to get the user ID from the URL
+        function getUserIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('user_id');
+        }
+
+        const userId = getUserIdFromUrl();
+        if (!userId) {
+            alert("User ID not found!");
+            throw new Error("User ID not found");
+        }
+
+        const clickArea = document.getElementById('click-area');
+        const pickaxe = document.getElementById('pickaxe');
+        const bitcoin = document.getElementById('bitcoin');
+        const rock = document.getElementById('rock');
+        const counter = document.getElementById('counter');
+        const clickSound = document.getElementById('click-sound');
+        const sparks = document.getElementById('sparks');
+
+        // Function to load user data
+        async function loadUserData() {
+            try {
+                console.log('Loading user data...');
+                const response = await fetch(`${API_BASE_URL}/load/${userId}`);
+                const userData = await response.json();
+                count = userData.btcCount;
+                counter.textContent = `BTC: ${count.toFixed(3)}`;
+                console.log('User data loaded:', userData);
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        }
+
+        // Function to save user data
+        async function saveUserData() {
+            try {
+                console.log('Saving user data...');
+                const response = await fetch(`${API_BASE_URL}/save`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ telegramId: userId, btcCount: count }),
+                });
+                const userData = await response.json();
+                console.log('User data saved:', userData);
+            } catch (error) {
+                console.error('Error saving user data:', error);
+            }
+        }
+
+        clickArea.addEventListener('click', () => {
+            const currentTime = new Date().getTime();
+            if (currentTime - lastClickTime < clickInterval) {
+                return;
+            }
+            lastClickTime = currentTime;
+
+            count += incrementValue;
+            counter.textContent = `BTC: ${count.toFixed(3)}`;
+            clickSound.currentTime = 0;
+            clickSound.play();
+
+            sparks.style.opacity = '1';
+            sparks.style.transform = 'translate(-50%, -50%) scale(1)';
+            sparks.classList.add('spark-animation');
+
+            pickaxe.style.transform = 'translate(-50%, 0) rotate(45deg)';
+            setTimeout(() => {
+                pickaxe.style.transform = 'translate(-50%, 0) rotate(0deg)';
+                sparks.style.opacity = '0';
+                sparks.classList.remove('spark-animation');
+            }, 100);
+
+            rock.style.transform = 'translateX(-50%) rotate(-5deg)';
+            setTimeout(() => {
+                rock.style.transform = 'translateX(-50%) rotate(5deg)';
+                setTimeout(() => {
+                    rock.style.transform = 'translateX(-50%) rotate(0deg)';
+                }, 100);
+            }, 100);
+        });
+
+        window.addEventListener('beforeunload', saveUserData);
+
+        loadUserData();
+    </script>
+</body>
+</html>
