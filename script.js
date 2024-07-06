@@ -109,9 +109,9 @@ clickArea.addEventListener('click', () => {
         sparks.classList.remove('spark-animation');
     }, 100);
 
-    rock.style.transform = 'translateX(-50%) rotate(-5deg)';
+    rock.style.transform = 'translateX(-50%) rotate(-3deg)';
     setTimeout(() => {
-        rock.style.transform = 'translateX(-50%) rotate(5deg)';
+        rock.style.transform = 'translateX(-50%) rotate(3deg)';
         setTimeout(() => {
             rock.style.transform = 'translateX(-50%) rotate(0deg)';
         }, 100);
