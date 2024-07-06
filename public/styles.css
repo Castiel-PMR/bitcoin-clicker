@@ -42,10 +42,10 @@ body, html {
 }
 #rock {
     position: absolute;
-    width: 310px;
+    width: 100%;
     height: auto;
-    bottom: -75%; /* Смещение вниз */
-    left: 70%;
+    bottom: -70%; /* Смещение вниз */
+    left: 68%;
     transform: translateX(-50%);
     z-index: 3;
     transition: transform 0.1s ease;
