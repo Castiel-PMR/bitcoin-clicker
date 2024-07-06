@@ -184,7 +184,7 @@
         }
 
         function showBonusMessage(bonus) {
-            bonusMessage.textContent = `Вы получили бонус: ${bonus.toFixed(3)} BTC!`;
+            bonusMessage.textContent = `+ Бонус: ${bonus.toFixed(3)} 💰💰💰`;
             bonusMessage.style.opacity = 1;
             setTimeout(() => {
                 bonusMessage.style.opacity = 0;
@@ -203,7 +203,7 @@
 
             // Добавление бонуса
             if (clickCount >= minBonusClicks && clickCount <= maxBonusClicks) {
-                const bonus = (Math.random() * 5) + 0.5; // Генерация случайного бонуса от 0.5 до 5.5
+                const bonus = (Math.random() * 1) + 0.05; // Генерация случайного бонуса от 0.5 до 5.5
                 count += bonus;
                 clickCount = 0; // Сброс счетчика кликов
                 showBonusMessage(bonus);
