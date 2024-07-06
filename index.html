@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bitcoin Mining Clicker Game</title>
+    <link rel="manifest" type="application/json" href="/manifest.webmanifest" />
     <style>
         body, html {
             margin: 0;
@@ -113,18 +114,15 @@
         let lastClickTime = 0;
         const clickInterval = 150;
         const incrementValue = 0.001;
-
         function getUserIdFromUrl() {
             const params = new URLSearchParams(window.location.search);
             return params.get('user_id');
         }
-
         const userId = getUserIdFromUrl();
         if (!userId) {
             alert("User ID not found!");
             throw new Error("User ID not found");
         }
-
         const clickArea = document.getElementById('click-area');
         const pickaxe = document.getElementById('pickaxe');
         const bitcoin = document.getElementById('bitcoin');
@@ -132,22 +130,18 @@
         const counter = document.getElementById('counter');
         const clickSound = document.getElementById('click-sound');
         const sparks = document.getElementById('sparks');
-
         async function loadUserData() {
             try {
                 console.log('Loading user data...');
                 const response = await fetch(`${API_BASE_URL}/api/load/${userId}`);
                 const userData = await response.json();
-                console.log('Loaded user data:', userData);
-                if (userData.btcCount !== undefined) {
-                    count = userData.btcCount;
-                    counter.textContent = `BTC: ${count.toFixed(3)}`;
-                }
+                count = userData.btcCount;
+                counter.textContent = `BTC: ${count.toFixed(3)}`;
+                console.log('User data loaded:', userData);
             } catch (error) {
                 console.error('Error loading user data:', error);
             }
         }
-
         async function saveUserData() {
             try {
                 console.log('Saving user data...');
@@ -164,7 +158,6 @@
                 console.error('Error saving user data:', error);
             }
         }
-
         clickArea.addEventListener('click', () => {
             const currentTime = new Date().getTime();
             if (currentTime - lastClickTime < clickInterval) {
@@ -193,7 +186,6 @@
                 }, 100);
             }, 100);
         });
-
         loadUserData();
     </script>
 </body>
