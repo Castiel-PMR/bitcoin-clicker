@@ -138,9 +138,9 @@
                 console.log('Loading user data...');
                 const response = await fetch(`${API_BASE_URL}/api/load/${userId}`);
                 const userData = await response.json();
+                console.log('User data loaded:', userData);
                 count = userData.btcCount;
                 counter.textContent = `BTC: ${count.toFixed(3)}`;
-                console.log('User data loaded:', userData);
             } catch (error) {
                 console.error('Error loading user data:', error);
             }
@@ -197,7 +197,7 @@
             }, 100);
         });
 
-        loadUserData();  // Вызов функции загрузки данных при загрузке страницы
+        loadUserData();
     </script>
 </body>
 </html>
