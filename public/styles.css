@@ -20,8 +20,8 @@ body, html {
     position: absolute;
     width: 180px;
     height: 180px;
-    left: 0;
-    top: 65%; /* Смещение вниз */
+    left: 0; /* Подкорректируем позицию */
+    top: 50%; /* Подкорректируем позицию */
     cursor: pointer;
     z-index: 5;
     background: transparent;
@@ -31,10 +31,10 @@ body, html {
 }
 #pickaxe {
     position: absolute;
-    width: 180px;
+    width: 170px;
     height: auto;
-    left: 27%;
-    top: 65%;
+    left: 30%;
+    top: 50%; /* Подкорректируем позицию */
     cursor: pointer;
     transition: transform 0.2s ease;
     z-index: 4;
@@ -42,10 +42,10 @@ body, html {
 }
 #rock {
     position: absolute;
-    width: 100%;
+    width: 255px;
     height: auto;
-    bottom: -70%; /* Смещение вниз */
-    left: 68%;
+    bottom: -50%; /* Подкорректируем позицию */
+    left: 70%; /* Центрируем по горизонтали */
     transform: translateX(-50%);
     z-index: 3;
     transition: transform 0.1s ease;
@@ -56,8 +56,8 @@ body, html {
     height: 120px;
     background: url('sparks.png') no-repeat center center;
     background-size: cover;
-    top: 110%; /* Смещение вниз */
-    left: 45%;
+    top: 90%; /* Подкорректируем позицию */
+    left: 50%; /* Центрируем по горизонтали */
     transform: translate(-50%, -50%);
     opacity: 0;
     pointer-events: none;
@@ -66,11 +66,15 @@ body, html {
 #counter {
     position: absolute;
     top: 3%;
+    left: 50%;
+    transform: translateX(-50%);
     font-size: 32px;
 }
 #bonus-message {
     position: absolute;
     top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
     font-size: 20px;
     color: gold;
     opacity: 0;
