@@ -18,10 +18,10 @@ body, html {
 }
 #click-area {
     position: absolute;
-    width: 150px;
-    height: 150px;
-    left: -20%;
-    top: 0; /* Смещение вниз */
+    width: 180px;
+    height: 180px;
+    left: 0;
+    top: 65%; /* Смещение вниз */
     cursor: pointer;
     z-index: 5;
     background: transparent;
