@@ -82,6 +82,15 @@
             margin-top: 20px;
             font-size: 24px;
         }
+        #bonus-message {
+            position: absolute;
+            top: 10px;
+            font-size: 20px;
+            color: gold;
+            opacity: 0;
+            transition: opacity 2s ease-out;
+            pointer-events: none;
+        }
         .spark-animation {
             animation: spark 0.3s forwards;
         }
@@ -106,6 +115,7 @@
         <div id="sparks"></div>
     </div>
     <div id="counter">BTC: 0.000</div>
+    <div id="bonus-message"></div>
     <audio id="click-sound" src="click.mp3" preload="auto"></audio>
     <script>
         const API_BASE_URL = "https://6cb6-95-153-90-59.ngrok-free.app"; // Замените на ваш URL ngrok
@@ -114,8 +124,8 @@
         const clickInterval = 150;
         const incrementValue = 0.001;
         let clickCount = 0;
-        const minBonusClicks = 10;
-        const maxBonusClicks = 20;
+        const minBonusClicks = 20;
+        const maxBonusClicks = 40;
 
         function getUserIdFromUrl() {
             const params = new URLSearchParams(window.location.search);
@@ -135,6 +145,7 @@
         const counter = document.getElementById('counter');
         const clickSound = document.getElementById('click-sound');
         const sparks = document.getElementById('sparks');
+        const bonusMessage = document.getElementById('bonus-message');
 
         async function loadUserData() {
             try {
@@ -172,6 +183,14 @@
             }
         }
 
+        function showBonusMessage(bonus) {
+            bonusMessage.textContent = `Вы получили бонус: ${bonus.toFixed(3)} BTC!`;
+            bonusMessage.style.opacity = 1;
+            setTimeout(() => {
+                bonusMessage.style.opacity = 0;
+            }, 2000);
+        }
+
         clickArea.addEventListener('click', () => {
             const currentTime = new Date().getTime();
             if (currentTime - lastClickTime < clickInterval) {
@@ -187,7 +206,7 @@
                 const bonus = (Math.random() * 5) + 0.5; // Генерация случайного бонуса от 0.5 до 5.5
                 count += bonus;
                 clickCount = 0; // Сброс счетчика кликов
-                alert(`Вы получили бонус: ${bonus.toFixed(3)} BTC!`);
+                showBonusMessage(bonus);
             }
 
             counter.textContent = `BTC: ${count.toFixed(3)}`;
