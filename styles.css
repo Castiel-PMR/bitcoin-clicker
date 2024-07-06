@@ -44,7 +44,7 @@ body, html {
     position: absolute;
     width: 310px;
     height: auto;
-    bottom: -75%;
+    bottom: -75%; /* Смещение вниз */
     left: 70%;
     transform: translateX(-50%);
     z-index: 3;
