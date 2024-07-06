@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bitcoin Mining Clicker Game</title>
-    <link rel="manifest" type="application/json" href="/manifest.webmanifest" />
     <style>
         body, html {
             margin: 0;
@@ -109,7 +108,7 @@
     <div id="counter">BTC: 0.000</div>
     <audio id="click-sound" src="click.mp3" preload="auto"></audio>
     <script>
-        const API_BASE_URL = "https://6cb6-95-153-90-59.ngrok-free.app";
+        const API_BASE_URL = "https://6cb6-95-153-90-59.ngrok-free.app"; // Замените на ваш URL ngrok
         let count = 0.0;
         let lastClickTime = 0;
         const clickInterval = 150;
@@ -133,7 +132,12 @@
         async function loadUserData() {
             try {
                 console.log('Loading user data...');
-                const response = await fetch(`${API_BASE_URL}/api/load/${userId}`);
+                const response = await fetch(`${API_BASE_URL}/api/load/${userId}`, {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true',
+                        'Content-Type': 'application/json'
+                    }
+                });
                 const userData = await response.json();
                 count = userData.btcCount;
                 counter.textContent = `BTC: ${count.toFixed(3)}`;
@@ -149,6 +153,7 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        'ngrok-skip-browser-warning': 'true'
                     },
                     body: JSON.stringify({ telegramId: userId, btcCount: count }),
                 });
