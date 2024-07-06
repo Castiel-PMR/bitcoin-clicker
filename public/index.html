@@ -126,10 +126,15 @@
         let clickCount = 0;
         const minBonusClicks = 20;
         const maxBonusClicks = 40;
+        let nextBonusClicks = getRandomClicks(minBonusClicks, maxBonusClicks);
 
         function getUserIdFromUrl() {
             const params = new URLSearchParams(window.location.search);
             return params.get('user_id');
+        }
+
+        function getRandomClicks(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
         const userId = getUserIdFromUrl();
@@ -202,10 +207,11 @@
             count += incrementValue;
 
             // Добавление бонуса
-            if (clickCount >= minBonusClicks && clickCount <= maxBonusClicks) {
-                const bonus = (Math.random() * 1) + 0.05; // Генерация случайного бонуса от 0.5 до 5.5
+            if (clickCount >= nextBonusClicks) {
+                const bonus = (Math.random() * 1) + 0.05; // Генерация случайного бонуса от 0.05 до 1.05
                 count += bonus;
                 clickCount = 0; // Сброс счетчика кликов
+                nextBonusClicks = getRandomClicks(minBonusClicks, maxBonusClicks); // Обновление количества кликов до следующего бонуса
                 showBonusMessage(bonus);
             }
 
