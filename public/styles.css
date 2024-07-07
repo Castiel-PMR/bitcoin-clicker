@@ -82,7 +82,7 @@ body, html {
 
 #bonus-message {
     position: absolute;
-    top: 50%;
+    top: 20%; /* Подняли выше */
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 20px;
@@ -97,22 +97,23 @@ body, html {
         opacity: 0;
         transform: translate(-50%, -50%) scale(0) rotate(0deg);
     }
-    25% {
+    100% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1.2) rotate(45deg);
+        transform: translate(-50%, -50%) scale(1.5) rotate(360deg);
     }
-    50% {
-        transform: translate(-50%, -50%) scale(1.5) rotate(90deg);
-    }
-    75% {
-        transform: translate(-50%, -50%) scale(1.2) rotate(135deg);
+}
+
+@keyframes bonusStay {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.5);
     }
     100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(1) rotate(180deg);
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.5);
     }
 }
 
 .bonus-animation {
-    animation: bonusAnimation 5s ease-in-out forwards;
+    animation: bonusAnimation 1.5s ease-in-out forwards, bonusStay 3s 1.5s forwards;
 }
