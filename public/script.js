@@ -143,7 +143,7 @@ clickArea.addEventListener('click', () => {
     count += incrementValue;
 
     // Показ сундуков раз в 50 кликов
-    if (clickCount >= 50) {
+    if (clickCount >= 10) {
         clickCount = 0; // Сброс счетчика кликов
         showChests();
     } else if (clickCount >= nextBonusClicks) {
