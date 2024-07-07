@@ -75,7 +75,7 @@ body, html {
     left: 50%;
     transform: translateX(-50%);
     font-size: 28px;
-    color: rgb(252, 253, 201); /* Золотой цвет текста */
+    color: rgb(253, 238, 172); /* Золотой цвет текста */
     text-shadow: 2px 2px 4px #000; /* Тень для текста для улучшения читабельности */
     font-family: 'Georgia', serif; /* Интересный шрифт */
 }
