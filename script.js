@@ -4,7 +4,7 @@ let lastClickTime = 0;
 const clickInterval = 150;
 const incrementValue = 0.001;
 let clickCount = 0;
-let nextChestClicks = getRandomClicks(50, 100);
+let nextChestClicks = getRandomClicks(50, 200);
 let bonusActive = false;
 
 function getUserIdFromUrl() {
