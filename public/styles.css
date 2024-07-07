@@ -82,11 +82,13 @@ body, html {
 
 #bonus-message {
     position: absolute;
-    top: 20%; /* Подняли выше */
+    top: 10%; /* Подняли выше */
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 20px;
-    color: gold;
+    font-size: 32px; /* Увеличенный размер шрифта */
+    color: rgb(249, 199, 101); /* Золотой цвет текста */
+    text-shadow: 2px 2px 4px #000; /* Тень для текста для улучшения читабельности */
+    font-family: 'Georgia', serif; /* Интересный шрифт */
     opacity: 0;
     pointer-events: none;
     z-index: 10;
