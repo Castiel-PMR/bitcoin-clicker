@@ -4,7 +4,7 @@ let lastClickTime = 0;
 const clickInterval = 150;
 const incrementValue = 0.001;
 let clickCount = 0;
-let nextChestClicks = getRandomClicks(50, 200);
+let nextChestClicks = getRandomClicks(50, 150);
 let bonusActive = false;
 
 function getUserIdFromUrl() {
@@ -85,7 +85,7 @@ function showChests() {
         chest.src = 'box.png'; // Путь к закрытому сундуку
         chest.classList.add('chest');
         chest.addEventListener('click', () => {
-            const bonus = (Math.random() * 4.5) + 0.5; // Генерация случайного бонуса от 0.5 до 5
+            const bonus = (Math.random() * 0.5) + 0.05; // Генерация случайного бонуса от 0.5 до 5
             count += bonus;
             counter.textContent = `BTC: ${count.toFixed(3)}`;
             chest.src = 'box_open.png'; // Путь к открытому сундуку
@@ -120,7 +120,7 @@ clickArea.addEventListener('click', () => {
     // Показ сундуков раз в случайное количество кликов от 50 до 100
     if (clickCount >= nextChestClicks) {
         clickCount = 0; // Сброс счетчика кликов
-        nextChestClicks = getRandomClicks(50, 100); // Обновление количества кликов до следующего сундука
+        nextChestClicks = getRandomClicks(50, 150); // Обновление количества кликов до следующего сундука
         showChests();
     }
 
