@@ -7,6 +7,7 @@ let clickCount = 0;
 const minBonusClicks = 20;
 const maxBonusClicks = 40;
 let nextBonusClicks = getRandomClicks(minBonusClicks, maxBonusClicks);
+let bonusActive = false;
 
 function getUserIdFromUrl() {
     const params = new URLSearchParams(window.location.search);
@@ -30,6 +31,7 @@ const counter = document.getElementById('counter');
 const clickSound = document.getElementById('click-sound');
 const sparks = document.getElementById('sparks');
 const bonusMessage = document.getElementById('bonus-message');
+const bonusSound = new Audio('bonus.mp3'); // Добавьте файл bonus.mp3 в проект
 
 async function loadUserData() {
     try {
@@ -69,10 +71,13 @@ async function saveUserData() {
 
 function showBonusMessage(bonus) {
     bonusMessage.textContent = `+ Бонус: ${bonus.toFixed(3)} 💰`;
-    bonusMessage.style.opacity = 1;
+    bonusMessage.classList.add('bonus-animation');
+    bonusSound.play();
     setTimeout(() => {
+        bonusMessage.classList.remove('bonus-animation');
         bonusMessage.style.opacity = 0;
-    }, 2000);
+        bonusActive = false; // Разрешаем клики после анимации
+    }, 5000);
 }
 
 function openFullscreen() {
@@ -88,6 +93,8 @@ function openFullscreen() {
 }
 
 clickArea.addEventListener('click', () => {
+    if (bonusActive) return; // Блокируем клики, если бонус активен
+
     const currentTime = new Date().getTime();
     if (currentTime - lastClickTime < clickInterval) {
         return;
@@ -103,6 +110,7 @@ clickArea.addEventListener('click', () => {
         count += bonus;
         clickCount = 0; // Сброс счетчика кликов
         nextBonusClicks = getRandomClicks(minBonusClicks, maxBonusClicks); // Обновление количества кликов до следующего бонуса
+        bonusActive = true; // Устанавливаем флаг, что бонус активен
         showBonusMessage(bonus);
     }
 
