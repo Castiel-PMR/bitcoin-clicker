@@ -4,12 +4,16 @@ let lastClickTime = 0;
 const clickInterval = 150;
 const incrementValue = 0.001;
 let clickCount = 0;
-const chestClicks = 50;
+let nextChestClicks = getRandomClicks(50, 100);
 let bonusActive = false;
 
 function getUserIdFromUrl() {
     const params = new URLSearchParams(window.location.search);
     return params.get('user_id');
+}
+
+function getRandomClicks(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 const userId = getUserIdFromUrl();
@@ -81,7 +85,7 @@ function showChests() {
         chest.src = 'box.png'; // Путь к закрытому сундуку
         chest.classList.add('chest');
         chest.addEventListener('click', () => {
-            const bonus = (Math.random() * 2.5) + 0.05; // Генерация случайного бонуса от 0.5 до 5
+            const bonus = (Math.random() * 4.5) + 0.5; // Генерация случайного бонуса от 0.5 до 5
             count += bonus;
             counter.textContent = `BTC: ${count.toFixed(3)}`;
             chest.src = 'box_open.png'; // Путь к открытому сундуку
@@ -113,9 +117,10 @@ clickArea.addEventListener('click', () => {
     clickCount++;
     count += incrementValue;
 
-    // Показ сундуков раз в 50 кликов
-    if (clickCount >= chestClicks) {
+    // Показ сундуков раз в случайное количество кликов от 50 до 100
+    if (clickCount >= nextChestClicks) {
         clickCount = 0; // Сброс счетчика кликов
+        nextChestClicks = getRandomClicks(50, 100); // Обновление количества кликов до следующего сундука
         showChests();
     }
 
