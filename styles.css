@@ -75,7 +75,7 @@ body, html {
     left: 50%;
     transform: translateX(-50%);
     font-size: 28px;
-    color: rgb(249, 199, 101); /* Золотой цвет текста */
+    color: rgb(198, 110, 57); /* Золотой цвет текста */
     text-shadow: 2px 2px 4px #000; /* Тень для текста для улучшения читабельности */
     font-family: 'Georgia', serif; /* Интересный шрифт */
 }
@@ -86,7 +86,7 @@ body, html {
     left: 50%;
     transform: translateX(-50%);
     font-size: 32px; /* Увеличенный размер шрифта */
-    color: rgb(249, 199, 101); /* Золотой цвет текста */
+    color: rgb(232, 154, 88); /* Золотой цвет текста */
     text-shadow: 2px 2px 4px #000; /* Тень для текста для улучшения читабельности */
     font-family: 'Georgia', serif; /* Интересный шрифт */
     opacity: 0;
