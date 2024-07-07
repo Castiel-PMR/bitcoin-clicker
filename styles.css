@@ -83,7 +83,7 @@ body, html {
 #bonus-message {
     position: absolute;
     top: 20%; /* Измените это значение для корректировки положения по вертикали */
-    left: 50%;
+    left: 55%;
     transform: translateX(-50%);
     font-size: 32px; /* Увеличенный размер шрифта */
     color: rgb(246, 171, 80); /* Золотой цвет текста */
