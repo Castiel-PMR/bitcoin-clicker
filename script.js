@@ -68,7 +68,7 @@ async function saveUserData() {
 }
 
 function showBonusMessage(bonus) {
-    bonusMessage.textContent = `+ Бонус: ${bonus.toFixed(3)} 💰💰💰`;
+    bonusMessage.textContent = `+ Бонус: ${bonus.toFixed(3)} 💰`;
     bonusMessage.style.opacity = 1;
     setTimeout(() => {
         bonusMessage.style.opacity = 0;
