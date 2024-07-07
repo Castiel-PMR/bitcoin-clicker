@@ -56,8 +56,8 @@ body, html {
     height: 120px;
     background: url('sparks.png') no-repeat center center;
     background-size: cover;
-    top: 90%; /* Подкорректируем позицию */
-    left: 50%; /* Центрируем по горизонтали */
+    top: 95%; /* Подкорректируем позицию */
+    left: 45%; /* Центрируем по горизонтали */
     transform: translate(-50%, -50%);
     opacity: 0;
     pointer-events: none;
