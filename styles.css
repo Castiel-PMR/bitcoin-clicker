@@ -94,6 +94,17 @@ body, html {
     z-index: 10;
 }
 
+#chest-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    z-index: 10;
+}
+
 
 @keyframes bonusAnimation {
     0% {
