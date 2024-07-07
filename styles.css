@@ -65,7 +65,7 @@ body, html {
 }
 #counter {
     position: absolute;
-    top: 2.5%;
+    top: 2.7%;
     left: 50%;
     transform: translateX(-50%);
     font-size: 32px;
