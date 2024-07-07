@@ -56,8 +56,8 @@ body, html {
     height: 120px;
     background: url('sparks.png') no-repeat center center;
     background-size: cover;
-    top: 95%; /* Подкорректируем позицию */
-    left: 45%; /* Центрируем по горизонтали */
+    top: 90%; /* Подкорректируем позицию */
+    left: 50%; /* Центрируем по горизонтали */
     transform: translate(-50%, -50%);
     opacity: 0;
     pointer-events: none;
@@ -65,14 +65,19 @@ body, html {
 }
 #counter {
     position: absolute;
-    top: 3%;
+    top: 2.4%;
     left: 50%;
     transform: translateX(-50%);
     font-size: 32px;
+    color: rgb(249, 199, 101); /* Золотой цвет текста */
+    text-shadow: 2px 2px 4px #000; /* Тень для текста для улучшения читабельности */
+    font-family: 'Georgia', serif; /* Интересный шрифт */
 }
+
+
 #bonus-message {
     position: absolute;
-    top: 40%;
+    top: 30%;
     left: 50%;
     transform: translateX(-50%);
     font-size: 20px;
