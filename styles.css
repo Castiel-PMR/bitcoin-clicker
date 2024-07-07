@@ -65,7 +65,7 @@ body, html {
 }
 #counter {
     position: absolute;
-    top: 2.4%;
+    top: 2%;
     left: 50%;
     transform: translateX(-50%);
     font-size: 32px;
@@ -73,7 +73,6 @@ body, html {
     text-shadow: 2px 2px 4px #000; /* Тень для текста для улучшения читабельности */
     font-family: 'Georgia', serif; /* Интересный шрифт */
 }
-
 
 #bonus-message {
     position: absolute;
