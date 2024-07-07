@@ -4,8 +4,8 @@ let lastClickTime = 0;
 const clickInterval = 150;
 const incrementValue = 0.001;
 let clickCount = 0;
-const minBonusClicks = 20;
-const maxBonusClicks = 40;
+const minBonusClicks = 30;
+const maxBonusClicks = 60;
 let nextBonusClicks = getRandomClicks(minBonusClicks, maxBonusClicks);
 let bonusActive = false;
 
@@ -106,7 +106,7 @@ clickArea.addEventListener('click', () => {
 
     // Добавление бонуса
     if (clickCount >= nextBonusClicks) {
-        const bonus = (Math.random() * 1) + 0.05; // Генерация случайного бонуса от 0.05 до 1.05
+        const bonus = (Math.random() * 0.1) + 0.005; // Генерация случайного бонуса от 0.05 до 1.05
         count += bonus;
         clickCount = 0; // Сброс счетчика кликов
         nextBonusClicks = getRandomClicks(minBonusClicks, maxBonusClicks); // Обновление количества кликов до следующего бонуса
