@@ -95,15 +95,21 @@ body, html {
 @keyframes bonusAnimation {
     0% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0);
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+    }
+    25% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2) rotate(45deg);
     }
     50% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.5);
+        transform: translate(-50%, -50%) scale(1.5) rotate(90deg);
+    }
+    75% {
+        transform: translate(-50%, -50%) scale(1.2) rotate(135deg);
     }
     100% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(1);
+        transform: translate(-50%, -50%) scale(1) rotate(180deg);
     }
 }
 
