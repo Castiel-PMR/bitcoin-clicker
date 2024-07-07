@@ -70,7 +70,7 @@ async function saveUserData() {
 }
 
 function showBonusMessage(bonus) {
-    bonusMessage.textContent = `+ Бонус: ${bonus.toFixed(3)} 💰`;
+    bonusMessage.textContent = `+ ${bonus.toFixed(3)} 💰`;
     bonusMessage.classList.add('bonus-animation');
     bonusSound.play();
     setTimeout(() => {
