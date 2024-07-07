@@ -111,11 +111,12 @@ function showChests() {
         chest.style.width = '100px'; // Размер сундука
         chest.style.cursor = 'pointer';
         chest.addEventListener('click', () => {
-            const bonus = (Math.random() * 0.03) + 0.005; // Генерация случайного бонуса от 0.5 до 5
+            const bonus = (Math.random() * 4.5) + 0.5; // Генерация случайного бонуса от 0.5 до 5
             count += bonus;
             counter.textContent = `BTC: ${count.toFixed(3)}`;
             chest.src = 'box_open.png'; // Путь к открытому сундуку
             chestSound.play();
+            showChestBonusMessage(bonus);
             saveUserData();
             setTimeout(() => {
                 document.body.removeChild(chestContainer);
@@ -128,6 +129,25 @@ function showChests() {
     document.body.appendChild(chestContainer);
     chestSound.play();
     bonusActive = true;
+}
+
+function showChestBonusMessage(bonus) {
+    const chestBonusMessage = document.createElement('div');
+    chestBonusMessage.textContent = `+ ${bonus.toFixed(3)} 💰`;
+    chestBonusMessage.style.position = 'absolute';
+    chestBonusMessage.style.top = '40%'; // Корректируйте это значение для изменения вертикального положения
+    chestBonusMessage.style.left = '50%';
+    chestBonusMessage.style.transform = 'translateX(-50%)';
+    chestBonusMessage.style.fontSize = '32px'; // Увеличенный размер шрифта
+    chestBonusMessage.style.color = 'rgb(246, 171, 80)'; // Золотой цвет текста
+    chestBonusMessage.style.textShadow = '2px 2px 4px #000'; // Тень для текста для улучшения читабельности
+    chestBonusMessage.style.fontFamily = 'Georgia, serif'; // Интересный шрифт
+    chestBonusMessage.style.zIndex = '11';
+
+    document.body.appendChild(chestBonusMessage);
+    setTimeout(() => {
+        document.body.removeChild(chestBonusMessage);
+    }, 3000); // Текст будет отображаться 3 секунды
 }
 
 clickArea.addEventListener('click', () => {
@@ -143,7 +163,7 @@ clickArea.addEventListener('click', () => {
     count += incrementValue;
 
     // Показ сундуков раз в 50 кликов
-    if (clickCount >= 10) {
+    if (clickCount >= 50) {
         clickCount = 0; // Сброс счетчика кликов
         showChests();
     } else if (clickCount >= nextBonusClicks) {
