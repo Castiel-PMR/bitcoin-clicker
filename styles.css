@@ -96,12 +96,12 @@ body, html {
 
 #chest-container {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
     justify-content: space-around;
-    width: 90%;
+    width: 95%;
     z-index: 10;
 }
 
