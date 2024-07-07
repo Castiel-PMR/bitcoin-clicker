@@ -77,7 +77,7 @@ function showBonusMessage(bonus) {
         bonusMessage.classList.remove('bonus-animation');
         bonusMessage.style.opacity = 0;
         bonusActive = false; // Разрешаем клики после анимации
-    }, 4000);
+    }, 4500); // 1.5 сек на анимацию и 3 сек на замер
 }
 
 function openFullscreen() {
