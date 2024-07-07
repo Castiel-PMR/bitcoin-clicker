@@ -4,7 +4,7 @@ let lastClickTime = 0;
 const clickInterval = 150;
 const incrementValue = 0.001;
 let clickCount = 0;
-const chestClicks = 10;
+const chestClicks = 50;
 let bonusActive = false;
 
 function getUserIdFromUrl() {
@@ -81,7 +81,7 @@ function showChests() {
         chest.src = 'box.png'; // Путь к закрытому сундуку
         chest.classList.add('chest');
         chest.addEventListener('click', () => {
-            const bonus = (Math.random() * 4.5) + 0.5; // Генерация случайного бонуса от 0.5 до 5
+            const bonus = (Math.random() * 2.5) + 0.05; // Генерация случайного бонуса от 0.5 до 5
             count += bonus;
             counter.textContent = `BTC: ${count.toFixed(3)}`;
             chest.src = 'box_open.png'; // Путь к открытому сундуку
