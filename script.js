@@ -111,7 +111,7 @@ function showChests() {
         chest.style.width = '100px'; // Размер сундука
         chest.style.cursor = 'pointer';
         chest.addEventListener('click', () => {
-            const bonus = (Math.random() * 4.5) + 0.5; // Генерация случайного бонуса от 0.5 до 5
+            const bonus = (Math.random() * 0.03) + 0.005; // Генерация случайного бонуса от 0.5 до 5
             count += bonus;
             counter.textContent = `BTC: ${count.toFixed(3)}`;
             chest.src = 'box_open.png'; // Путь к открытому сундуку
