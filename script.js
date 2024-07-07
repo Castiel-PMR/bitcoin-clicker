@@ -75,6 +75,18 @@ function showBonusMessage(bonus) {
     }, 2000);
 }
 
+function openFullscreen() {
+    if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+        document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+        document.documentElement.webkitRequestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+        document.documentElement.msRequestFullscreen();
+    }
+}
+
 clickArea.addEventListener('click', () => {
     const currentTime = new Date().getTime();
     if (currentTime - lastClickTime < clickInterval) {
@@ -116,6 +128,13 @@ clickArea.addEventListener('click', () => {
             rock.style.transform = 'translateX(-50%) rotate(0deg)';
         }, 100);
     }, 100);
+});
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    // Проверка, что мы в Telegram WebApp
+    if (window.Telegram.WebApp) {
+        openFullscreen();
+    }
 });
 
 loadUserData();
