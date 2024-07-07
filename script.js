@@ -4,18 +4,12 @@ let lastClickTime = 0;
 const clickInterval = 150;
 const incrementValue = 0.001;
 let clickCount = 0;
-const minBonusClicks = 30;
-const maxBonusClicks = 60;
-let nextBonusClicks = getRandomClicks(minBonusClicks, maxBonusClicks);
+const chestClicks = 10;
 let bonusActive = false;
 
 function getUserIdFromUrl() {
     const params = new URLSearchParams(window.location.search);
     return params.get('user_id');
-}
-
-function getRandomClicks(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 const userId = getUserIdFromUrl();
@@ -30,8 +24,6 @@ const rock = document.getElementById('rock');
 const counter = document.getElementById('counter');
 const clickSound = document.getElementById('click-sound');
 const sparks = document.getElementById('sparks');
-const bonusMessage = document.getElementById('bonus-message');
-const bonusSound = new Audio('bonus.mp3'); // Добавьте файл bonus.mp3 в проект
 const chestSound = new Audio('chest.mp3'); // Добавьте файл chest.mp3 в проект
 
 async function loadUserData() {
@@ -70,67 +62,6 @@ async function saveUserData() {
     }
 }
 
-function showBonusMessage(bonus) {
-    bonusMessage.textContent = `+ ${bonus.toFixed(3)} 💰`;
-    bonusMessage.classList.add('bonus-animation');
-    bonusSound.play();
-    setTimeout(() => {
-        bonusMessage.classList.remove('bonus-animation');
-        bonusMessage.style.opacity = 0;
-        bonusActive = false; // Разрешаем клики после анимации
-    }, 4500); // 1.5 сек на анимацию и 3 сек на замер
-}
-
-function openFullscreen() {
-    if (document.documentElement.requestFullscreen) {
-        document.documentElement.requestFullscreen();
-    } else if (document.documentElement.mozRequestFullScreen) { // Firefox
-        document.documentElement.mozRequestFullScreen();
-    } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-        document.documentElement.webkitRequestFullscreen();
-    } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
-        document.documentElement.msRequestFullscreen();
-    }
-}
-
-function showChests() {
-    const chestContainer = document.createElement('div');
-    chestContainer.id = 'chest-container';
-    chestContainer.style.position = 'absolute';
-    chestContainer.style.top = '50%';
-    chestContainer.style.left = '50%';
-    chestContainer.style.transform = 'translate(-50%, -50%)';
-    chestContainer.style.display = 'flex';
-    chestContainer.style.justifyContent = 'space-around';
-    chestContainer.style.width = '90%';
-    chestContainer.style.zIndex = '10';
-
-    for (let i = 0; i < 3; i++) {
-        const chest = document.createElement('img');
-        chest.src = 'box.png'; // Путь к закрытому сундуку
-        chest.style.width = '100px'; // Размер сундука
-        chest.style.cursor = 'pointer';
-        chest.addEventListener('click', () => {
-            const bonus = (Math.random() * 4.5) + 0.5; // Генерация случайного бонуса от 0.5 до 5
-            count += bonus;
-            counter.textContent = `BTC: ${count.toFixed(3)}`;
-            chest.src = 'box_open.png'; // Путь к открытому сундуку
-            chestSound.play();
-            showChestBonusMessage(bonus);
-            saveUserData();
-            setTimeout(() => {
-                document.body.removeChild(chestContainer);
-                bonusActive = false;
-            }, 2000);
-        });
-        chestContainer.appendChild(chest);
-    }
-
-    document.body.appendChild(chestContainer);
-    chestSound.play();
-    bonusActive = true;
-}
-
 function showChestBonusMessage(bonus) {
     const chestBonusMessage = document.createElement('div');
     chestBonusMessage.textContent = `+ ${bonus.toFixed(3)} 💰`;
@@ -150,6 +81,44 @@ function showChestBonusMessage(bonus) {
     }, 3000); // Текст будет отображаться 3 секунды
 }
 
+function showChests() {
+    const chestContainer = document.createElement('div');
+    chestContainer.id = 'chest-container';
+    chestContainer.style.position = 'absolute';
+    chestContainer.style.top = '40%';
+    chestContainer.style.left = '50%';
+    chestContainer.style.transform = 'translate(-50%, -50%)';
+    chestContainer.style.display = 'flex';
+    chestContainer.style.justifyContent = 'space-around';
+    chestContainer.style.width = '95%';
+    chestContainer.style.zIndex = '10';
+
+    for (let i = 0; i < 3; i++) {
+        const chest = document.createElement('img');
+        chest.src = 'box.png'; // Путь к закрытому сундуку
+        chest.style.width = '100px'; // Размер сундука
+        chest.style.cursor = 'pointer';
+        chest.addEventListener('click', () => {
+            const bonus = (Math.random() * 0.05) + 0.005; // Генерация случайного бонуса от 0.5 до 5
+            count += bonus;
+            counter.textContent = `BTC: ${count.toFixed(3)}`;
+            chest.src = 'box_open.png'; // Путь к открытому сундуку
+            chestSound.play();
+            showChestBonusMessage(bonus);
+            saveUserData();
+            setTimeout(() => {
+                document.body.removeChild(chestContainer);
+                bonusActive = false;
+            }, 2000);
+        });
+        chestContainer.appendChild(chest);
+    }
+
+    document.body.appendChild(chestContainer);
+    chestSound.play();
+    bonusActive = true;
+}
+
 clickArea.addEventListener('click', () => {
     if (bonusActive) return; // Блокируем клики, если бонус активен
 
@@ -163,16 +132,9 @@ clickArea.addEventListener('click', () => {
     count += incrementValue;
 
     // Показ сундуков раз в 50 кликов
-    if (clickCount >= 50) {
+    if (clickCount >= chestClicks) {
         clickCount = 0; // Сброс счетчика кликов
         showChests();
-    } else if (clickCount >= nextBonusClicks) {
-        const bonus = (Math.random() * 0.1) + 0.005; // Генерация случайного бонуса от 0.05 до 1.05
-        count += bonus;
-        clickCount = 0; // Сброс счетчика кликов
-        nextBonusClicks = getRandomClicks(minBonusClicks, maxBonusClicks); // Обновление количества кликов до следующего бонуса
-        bonusActive = true; // Устанавливаем флаг, что бонус активен
-        showBonusMessage(bonus);
     }
 
     counter.textContent = `BTC: ${count.toFixed(3)}`;
