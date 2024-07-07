@@ -105,6 +105,22 @@ body, html {
     z-index: 10;
 }
 
+.chest {
+    width: 100px;
+    cursor: pointer;
+}
+
+.chest-bonus-message {
+    position: absolute;
+    top: 20%; /* Корректируйте это значение для изменения вертикального положения */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px; /* Увеличенный размер шрифта */
+    color: rgb(246, 171, 80); /* Золотой цвет текста */
+    text-shadow: 2px 2px 4px #000; /* Тень для текста для улучшения читабельности */
+    font-family: 'Georgia', serif; /* Интересный шрифт */
+    z-index: 11;
+}
 
 @keyframes bonusAnimation {
     0% {
