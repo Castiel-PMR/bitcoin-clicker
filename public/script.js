@@ -32,6 +32,7 @@ const clickSound = document.getElementById('click-sound');
 const sparks = document.getElementById('sparks');
 const bonusMessage = document.getElementById('bonus-message');
 const bonusSound = new Audio('bonus.mp3'); // Добавьте файл bonus.mp3 в проект
+const chestSound = new Audio('chest.mp3'); // Добавьте файл chest.mp3 в проект
 
 async function loadUserData() {
     try {
@@ -92,6 +93,43 @@ function openFullscreen() {
     }
 }
 
+function showChests() {
+    const chestContainer = document.createElement('div');
+    chestContainer.id = 'chest-container';
+    chestContainer.style.position = 'absolute';
+    chestContainer.style.top = '50%';
+    chestContainer.style.left = '50%';
+    chestContainer.style.transform = 'translate(-50%, -50%)';
+    chestContainer.style.display = 'flex';
+    chestContainer.style.justifyContent = 'space-around';
+    chestContainer.style.width = '90%';
+    chestContainer.style.zIndex = '10';
+
+    for (let i = 0; i < 3; i++) {
+        const chest = document.createElement('img');
+        chest.src = 'box.png'; // Путь к закрытому сундуку
+        chest.style.width = '100px'; // Размер сундука
+        chest.style.cursor = 'pointer';
+        chest.addEventListener('click', () => {
+            const bonus = (Math.random() * 4.5) + 0.5; // Генерация случайного бонуса от 0.5 до 5
+            count += bonus;
+            counter.textContent = `BTC: ${count.toFixed(3)}`;
+            chest.src = 'box_open.png'; // Путь к открытому сундуку
+            chestSound.play();
+            saveUserData();
+            setTimeout(() => {
+                document.body.removeChild(chestContainer);
+                bonusActive = false;
+            }, 2000);
+        });
+        chestContainer.appendChild(chest);
+    }
+
+    document.body.appendChild(chestContainer);
+    chestSound.play();
+    bonusActive = true;
+}
+
 clickArea.addEventListener('click', () => {
     if (bonusActive) return; // Блокируем клики, если бонус активен
 
@@ -104,8 +142,11 @@ clickArea.addEventListener('click', () => {
     clickCount++;
     count += incrementValue;
 
-    // Добавление бонуса
-    if (clickCount >= nextBonusClicks) {
+    // Показ сундуков раз в 50 кликов
+    if (clickCount >= 50) {
+        clickCount = 0; // Сброс счетчика кликов
+        showChests();
+    } else if (clickCount >= nextBonusClicks) {
         const bonus = (Math.random() * 0.1) + 0.005; // Генерация случайного бонуса от 0.05 до 1.05
         count += bonus;
         clickCount = 0; // Сброс счетчика кликов
