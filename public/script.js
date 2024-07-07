@@ -65,16 +65,7 @@ async function saveUserData() {
 function showChestBonusMessage(bonus) {
     const chestBonusMessage = document.createElement('div');
     chestBonusMessage.textContent = `+ ${bonus.toFixed(3)} 💰`;
-    chestBonusMessage.style.position = 'absolute';
-    chestBonusMessage.style.top = '40%'; // Корректируйте это значение для изменения вертикального положения
-    chestBonusMessage.style.left = '50%';
-    chestBonusMessage.style.transform = 'translateX(-50%)';
-    chestBonusMessage.style.fontSize = '32px'; // Увеличенный размер шрифта
-    chestBonusMessage.style.color = 'rgb(246, 171, 80)'; // Золотой цвет текста
-    chestBonusMessage.style.textShadow = '2px 2px 4px #000'; // Тень для текста для улучшения читабельности
-    chestBonusMessage.style.fontFamily = 'Georgia, serif'; // Интересный шрифт
-    chestBonusMessage.style.zIndex = '11';
-
+    chestBonusMessage.classList.add('chest-bonus-message');
     document.body.appendChild(chestBonusMessage);
     setTimeout(() => {
         document.body.removeChild(chestBonusMessage);
@@ -84,22 +75,13 @@ function showChestBonusMessage(bonus) {
 function showChests() {
     const chestContainer = document.createElement('div');
     chestContainer.id = 'chest-container';
-    chestContainer.style.position = 'absolute';
-    chestContainer.style.top = '40%';
-    chestContainer.style.left = '50%';
-    chestContainer.style.transform = 'translate(-50%, -50%)';
-    chestContainer.style.display = 'flex';
-    chestContainer.style.justifyContent = 'space-around';
-    chestContainer.style.width = '95%';
-    chestContainer.style.zIndex = '10';
 
     for (let i = 0; i < 3; i++) {
         const chest = document.createElement('img');
         chest.src = 'box.png'; // Путь к закрытому сундуку
-        chest.style.width = '100px'; // Размер сундука
-        chest.style.cursor = 'pointer';
+        chest.classList.add('chest');
         chest.addEventListener('click', () => {
-            const bonus = (Math.random() * 0.05) + 0.005; // Генерация случайного бонуса от 0.5 до 5
+            const bonus = (Math.random() * 4.5) + 0.5; // Генерация случайного бонуса от 0.5 до 5
             count += bonus;
             counter.textContent = `BTC: ${count.toFixed(3)}`;
             chest.src = 'box_open.png'; // Путь к открытому сундуку
