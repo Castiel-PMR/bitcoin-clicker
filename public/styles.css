@@ -82,10 +82,10 @@ body, html {
 
 #bonus-message {
     position: absolute;
-    top: 10%; /* Подняли выше */
+    top: 20%; /* Измените это значение для корректировки положения по вертикали */
     left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 28px; /* Увеличенный размер шрифта */
+    transform: translateX(-50%);
+    font-size: 32px; /* Увеличенный размер шрифта */
     color: rgb(249, 199, 101); /* Золотой цвет текста */
     text-shadow: 2px 2px 4px #000; /* Тень для текста для улучшения читабельности */
     font-family: 'Georgia', serif; /* Интересный шрифт */
@@ -93,6 +93,7 @@ body, html {
     pointer-events: none;
     z-index: 10;
 }
+
 
 @keyframes bonusAnimation {
     0% {
