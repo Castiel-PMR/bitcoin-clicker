@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://0c26-95-153-90-59.ngrok-free.app";
+const API_BASE_URL = "https://0c26-95-153-90-59.ngrok-free.app"; 
 let count = 0.0;
 let lastClickTime = 0;
 const clickInterval = 150;
@@ -12,14 +12,11 @@ function getUserIdFromUrl() {
     return params.get('user_id');
 }
 
-function getUserNameFromUrl() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('user_name') || '';
+function getRandomClicks(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 const userId = getUserIdFromUrl();
-let userName = getUserNameFromUrl();
-
 if (!userId) {
     alert("User ID not found!");
     throw new Error("User ID not found");
@@ -31,17 +28,12 @@ const rock = document.getElementById('rock');
 const counter = document.getElementById('counter');
 const clickSound = document.getElementById('click-sound');
 const sparks = document.getElementById('sparks');
-const chestSound = new Audio('chest.mp3');
-
-// Используем Telegram WebApp API для получения имени пользователя
-if (window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
-    userName = window.Telegram.WebApp.initDataUnsafe.user.first_name;
-}
+const chestSound = new Audio('chest.mp3'); 
 
 async function loadUserData() {
     try {
         console.log('Loading user data...');
-        const response = await fetch(`${API_BASE_URL}/api/load/${userId}`, {
+        const response = await fetch(${API_BASE_URL}/api/load/${userId}, {
             headers: {
                 'ngrok-skip-browser-warning': 'true',
                 'Content-Type': 'application/json'
@@ -54,10 +46,7 @@ async function loadUserData() {
         } else {
             count = 0;
         }
-        counter.textContent = `BTC: ${count.toFixed(3)}`;
-        if (userData && userData.firstname !== undefined) {
-            userName = userData.firstname;
-        }
+        counter.textContent = BTC: ${count.toFixed(3)};
         console.log('User data loaded:', userData);
     } catch (error) {
         console.error('Error loading user data:', error);
@@ -66,14 +55,14 @@ async function loadUserData() {
 
 async function saveUserData() {
     try {
-        console.log('Saving user data with count:', count, 'and name:', userName);
-        const response = await fetch(`${API_BASE_URL}/api/save`, {
+        console.log('Saving user data with count:', count);
+        const response = await fetch(${API_BASE_URL}/api/save, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'ngrok-skip-browser-warning': 'true'
             },
-            body: JSON.stringify({ telegramId: userId, btcCount: count, firstName: userName }),
+            body: JSON.stringify({ telegramId: userId, btcCount: count }),
         });
         const userData = await response.json();
         console.log('User data saved:', userData);
@@ -84,12 +73,12 @@ async function saveUserData() {
 
 function showChestBonusMessage(bonus) {
     const chestBonusMessage = document.createElement('div');
-    chestBonusMessage.textContent = `+ ${bonus.toFixed(3)} 💰`;
+    chestBonusMessage.textContent = + ${bonus.toFixed(3)} 💰;
     chestBonusMessage.classList.add('chest-bonus-message');
     document.body.appendChild(chestBonusMessage);
     setTimeout(() => {
         document.body.removeChild(chestBonusMessage);
-    }, 3000);
+    }, 3000); 
 }
 
 function showChests() {
@@ -98,13 +87,13 @@ function showChests() {
 
     for (let i = 0; i < 3; i++) {
         const chest = document.createElement('img');
-        chest.src = 'box.png';
+        chest.src = 'box.png'; 
         chest.classList.add('chest');
         chest.addEventListener('click', () => {
-            const bonus = (Math.random() * 1.5) + 0.005;
+            const bonus = (Math.random() * 1.5) + 0.005; 
             count += bonus;
-            counter.textContent = `BTC: ${count.toFixed(3)}`;
-            chest.src = 'box_open.png';
+            counter.textContent = BTC: ${count.toFixed(3)};
+            chest.src = 'box_open.png'; 
             chestSound.play();
             showChestBonusMessage(bonus);
             saveUserData();
@@ -122,7 +111,7 @@ function showChests() {
 }
 
 clickArea.addEventListener('click', () => {
-    if (bonusActive) return;
+    if (bonusActive) return; 
 
     const currentTime = new Date().getTime();
     if (currentTime - lastClickTime < clickInterval) {
@@ -134,12 +123,12 @@ clickArea.addEventListener('click', () => {
     count += incrementValue;
 
     if (clickCount >= nextChestClicks) {
-        clickCount = 0;
-        nextChestClicks = getRandomClicks(50, 150);
+        clickCount = 0; 
+        nextChestClicks = getRandomClicks(50, 150); 
         showChests();
     }
 
-    counter.textContent = `BTC: ${count.toFixed(3)}`;
+    counter.textContent = BTC: ${count.toFixed(3)};
     clickSound.currentTime = 0;
     clickSound.play();
     saveUserData();
