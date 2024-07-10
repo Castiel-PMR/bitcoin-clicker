@@ -58,10 +58,7 @@ async function saveUserData() {
             },
             body: JSON.stringify({
                 telegramId: userId,
-                btcCount: count,
-                avatar: 'your_avatar_url', // Замените на фактическое значение
-                firstName: 'your_first_name', // Замените на фактическое значение
-                lastName: 'your_last_name' // Замените на фактическое значение
+                btcCount: count
             }),
         });
         const userData = await response.json();
