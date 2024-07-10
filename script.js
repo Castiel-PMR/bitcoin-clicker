@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://e85a-95-153-90-59.ngrok-free.app"; // Замените на ваш URL ngrok
+const API_BASE_URL = "https://e85a-95-153-90-59.ngrok-free.app"; 
 let count = 0.0;
 let lastClickTime = 0;
 const clickInterval = 150;
@@ -22,17 +22,19 @@ if (!userId) {
     throw new Error("User ID not found");
 }
 
+console.log(`User ID: ${userId}`); // Добавлено для отладки
+
 const clickArea = document.getElementById('click-area');
 const pickaxe = document.getElementById('pickaxe');
 const rock = document.getElementById('rock');
 const counter = document.getElementById('counter');
 const clickSound = document.getElementById('click-sound');
 const sparks = document.getElementById('sparks');
-const chestSound = new Audio('chest.mp3'); // Добавьте файл chest.mp3 в проект
+const chestSound = new Audio('chest.mp3'); 
 
 async function loadUserData() {
     try {
-        console.log('Loading user data...');
+        console.log('Loading user data...'); // Добавлено для отладки
         const response = await fetch(`${API_BASE_URL}/api/load/${userId}`, {
             headers: {
                 'ngrok-skip-browser-warning': 'true',
@@ -40,9 +42,9 @@ async function loadUserData() {
             }
         });
         const userData = await response.json();
-        count = userData.btcCount;
+        console.log('User data loaded:', userData); // Добавлено для отладки
+        count = userData.btccount || 0;
         counter.textContent = `BTC: ${count.toFixed(3)}`;
-        console.log('User data loaded:', userData);
     } catch (error) {
         console.error('Error loading user data:', error);
     }
@@ -50,7 +52,7 @@ async function loadUserData() {
 
 async function saveUserData() {
     try {
-        console.log('Saving user data...');
+        console.log(`Saving user data: ${userId}, ${count}`); // Добавлено для отладки
         const response = await fetch(`${API_BASE_URL}/api/save`, {
             method: 'POST',
             headers: {
@@ -60,7 +62,7 @@ async function saveUserData() {
             body: JSON.stringify({ telegramId: userId, btcCount: count }),
         });
         const userData = await response.json();
-        console.log('User data saved:', userData);
+        console.log('User data saved:', userData); // Добавлено для отладки
     } catch (error) {
         console.error('Error saving user data:', error);
     }
@@ -73,7 +75,7 @@ function showChestBonusMessage(bonus) {
     document.body.appendChild(chestBonusMessage);
     setTimeout(() => {
         document.body.removeChild(chestBonusMessage);
-    }, 3000); // Текст будет отображаться 3 секунды
+    }, 3000); 
 }
 
 function showChests() {
@@ -82,13 +84,13 @@ function showChests() {
 
     for (let i = 0; i < 3; i++) {
         const chest = document.createElement('img');
-        chest.src = 'box.png'; // Путь к закрытому сундуку
+        chest.src = 'box.png'; 
         chest.classList.add('chest');
         chest.addEventListener('click', () => {
-            const bonus = (Math.random() * 0.5) + 0.05; // Генерация случайного бонуса от 0.5 до 5
+            const bonus = (Math.random() * 0.5) + 0.05; 
             count += bonus;
             counter.textContent = `BTC: ${count.toFixed(3)}`;
-            chest.src = 'box_open.png'; // Путь к открытому сундуку
+            chest.src = 'box_open.png'; 
             chestSound.play();
             showChestBonusMessage(bonus);
             saveUserData();
@@ -106,7 +108,7 @@ function showChests() {
 }
 
 clickArea.addEventListener('click', () => {
-    if (bonusActive) return; // Блокируем клики, если бонус активен
+    if (bonusActive) return; 
 
     const currentTime = new Date().getTime();
     if (currentTime - lastClickTime < clickInterval) {
@@ -117,10 +119,9 @@ clickArea.addEventListener('click', () => {
     clickCount++;
     count += incrementValue;
 
-    // Показ сундуков раз в случайное количество кликов от 50 до 100
     if (clickCount >= nextChestClicks) {
-        clickCount = 0; // Сброс счетчика кликов
-        nextChestClicks = getRandomClicks(50, 150); // Обновление количества кликов до следующего сундука
+        clickCount = 0; 
+        nextChestClicks = getRandomClicks(50, 150); 
         showChests();
     }
 
@@ -149,10 +150,8 @@ clickArea.addEventListener('click', () => {
 });
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    // Проверка, что мы в Telegram WebApp
     if (window.Telegram.WebApp) {
         openFullscreen();
     }
+    loadUserData(); // Обновлено: загрузка данных при загрузке страницы
 });
-
-loadUserData();
