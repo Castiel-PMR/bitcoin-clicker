@@ -22,6 +22,8 @@ if (!userId) {
     throw new Error("User ID not found");
 }
 
+console.log(`User ID: ${userId}`); // Добавлено для отладки
+
 const clickArea = document.getElementById('click-area');
 const pickaxe = document.getElementById('pickaxe');
 const rock = document.getElementById('rock');
@@ -32,7 +34,7 @@ const chestSound = new Audio('chest.mp3');
 
 async function loadUserData() {
     try {
-        console.log('Loading user data...');
+        console.log('Loading user data...'); // Добавлено для отладки
         const response = await fetch(`${API_BASE_URL}/api/load/${userId}`, {
             headers: {
                 'ngrok-skip-browser-warning': 'true',
@@ -40,9 +42,9 @@ async function loadUserData() {
             }
         });
         const userData = await response.json();
+        console.log('User data loaded:', userData); // Добавлено для отладки
         count = userData.btccount || 0;
         counter.textContent = `BTC: ${count.toFixed(3)}`;
-        console.log('User data loaded:', userData);
     } catch (error) {
         console.error('Error loading user data:', error);
     }
@@ -50,7 +52,7 @@ async function loadUserData() {
 
 async function saveUserData() {
     try {
-        console.log('Saving user data...');
+        console.log(`Saving user data: ${userId}, ${count}`); // Добавлено для отладки
         const response = await fetch(`${API_BASE_URL}/api/save`, {
             method: 'POST',
             headers: {
@@ -60,7 +62,7 @@ async function saveUserData() {
             body: JSON.stringify({ telegramId: userId, btcCount: count }),
         });
         const userData = await response.json();
-        console.log('User data saved:', userData);
+        console.log('User data saved:', userData); // Добавлено для отладки
     } catch (error) {
         console.error('Error saving user data:', error);
     }
@@ -151,6 +153,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (window.Telegram.WebApp) {
         openFullscreen();
     }
+    loadUserData(); // Обновлено: загрузка данных при загрузке страницы
 });
-
-loadUserData();
