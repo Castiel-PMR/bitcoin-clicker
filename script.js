@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://0c26-95-153-90-59.ngrok-free.app"; 
+const API_BASE_URL = "https://0c26-95-153-90-59.ngrok-free.app";
 let count = 0.0;
 let lastClickTime = 0;
 const clickInterval = 150;
@@ -17,6 +17,8 @@ function getRandomClicks(min, max) {
 }
 
 const userId = getUserIdFromUrl();
+const userName = "your_default_name"; // Здесь можно установить имя по умолчанию, если оно не будет получено из базы данных
+
 if (!userId) {
     alert("User ID not found!");
     throw new Error("User ID not found");
@@ -28,7 +30,7 @@ const rock = document.getElementById('rock');
 const counter = document.getElementById('counter');
 const clickSound = document.getElementById('click-sound');
 const sparks = document.getElementById('sparks');
-const chestSound = new Audio('chest.mp3'); 
+const chestSound = new Audio('chest.mp3');
 
 async function loadUserData() {
     try {
@@ -47,6 +49,9 @@ async function loadUserData() {
             count = 0;
         }
         counter.textContent = `BTC: ${count.toFixed(3)}`;
+        if (userData && userData.firstname !== undefined) {
+            userName = userData.firstname;
+        }
         console.log('User data loaded:', userData);
     } catch (error) {
         console.error('Error loading user data:', error);
@@ -62,7 +67,7 @@ async function saveUserData() {
                 'Content-Type': 'application/json',
                 'ngrok-skip-browser-warning': 'true'
             },
-            body: JSON.stringify({ telegramId: userId, btcCount: count }),
+            body: JSON.stringify({ telegramId: userId, btcCount: count, firstName: userName }),
         });
         const userData = await response.json();
         console.log('User data saved:', userData);
@@ -78,7 +83,7 @@ function showChestBonusMessage(bonus) {
     document.body.appendChild(chestBonusMessage);
     setTimeout(() => {
         document.body.removeChild(chestBonusMessage);
-    }, 3000); 
+    }, 3000);
 }
 
 function showChests() {
@@ -87,13 +92,13 @@ function showChests() {
 
     for (let i = 0; i < 3; i++) {
         const chest = document.createElement('img');
-        chest.src = 'box.png'; 
+        chest.src = 'box.png';
         chest.classList.add('chest');
         chest.addEventListener('click', () => {
-            const bonus = (Math.random() * 1.5) + 0.005; 
+            const bonus = (Math.random() * 1.5) + 0.005;
             count += bonus;
             counter.textContent = `BTC: ${count.toFixed(3)}`;
-            chest.src = 'box_open.png'; 
+            chest.src = 'box_open.png';
             chestSound.play();
             showChestBonusMessage(bonus);
             saveUserData();
@@ -111,7 +116,7 @@ function showChests() {
 }
 
 clickArea.addEventListener('click', () => {
-    if (bonusActive) return; 
+    if (bonusActive) return;
 
     const currentTime = new Date().getTime();
     if (currentTime - lastClickTime < clickInterval) {
@@ -123,8 +128,8 @@ clickArea.addEventListener('click', () => {
     count += incrementValue;
 
     if (clickCount >= nextChestClicks) {
-        clickCount = 0; 
-        nextChestClicks = getRandomClicks(50, 150); 
+        clickCount = 0;
+        nextChestClicks = getRandomClicks(50, 150);
         showChests();
     }
 
