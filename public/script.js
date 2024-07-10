@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://e85a-95-153-90-59.ngrok-free.app"; 
+const API_BASE_URL = "https://0c26-95-153-90-59.ngrok-free.app"; 
 let count = 0.0;
 let lastClickTime = 0;
 const clickInterval = 150;
