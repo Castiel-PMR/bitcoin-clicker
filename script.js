@@ -90,7 +90,7 @@ function showChests() {
         chest.src = 'box.png'; 
         chest.classList.add('chest');
         chest.addEventListener('click', () => {
-            const bonus = (Math.random() * 0.5) + 0.05; 
+            const bonus = (Math.random() * 1.5) + 0.005; 
             count += bonus;
             counter.textContent = `BTC: ${count.toFixed(3)}`;
             chest.src = 'box_open.png'; 
