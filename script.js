@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://9bc6-95-153-90-59.ngrok-free.app"; // Замените на ваш URL ngrok
+const API_BASE_URL = "https://e85a-95-153-90-59.ngrok-free.app"; // Замените на ваш URL ngrok
 let count = 0.0;
 let lastClickTime = 0;
 const clickInterval = 150;
