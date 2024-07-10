@@ -50,10 +50,7 @@ async function loadUserData() {
 
 async function saveUserData() {
     try {
-        const avatar = 'avatar_url'; // Укажите URL аватара
-        const firstName = 'UserFirstName'; // Укажите имя пользователя
-        const lastName = 'UserLastName'; // Укажите фамилию пользователя
-
+        console.log('Saving user data...');
         const response = await fetch(`${API_BASE_URL}/api/save`, {
             method: 'POST',
             headers: {
@@ -63,10 +60,10 @@ async function saveUserData() {
             body: JSON.stringify({
                 telegramId: userId,
                 btcCount: count,
-                avatar: avatar,
-                firstName: firstName,
-                lastName: lastName
-            })
+                avatar: "", // Ваш код для получения avatar
+                firstName: "", // Ваш код для получения firstName
+                lastName: "" // Ваш код для получения lastName
+            }),
         });
         const userData = await response.json();
         console.log('User data saved:', userData);
