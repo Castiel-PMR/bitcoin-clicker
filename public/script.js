@@ -50,6 +50,10 @@ async function loadUserData() {
 
 async function saveUserData() {
     try {
+        const avatar = 'avatar_url'; // Укажите URL аватара
+        const firstName = 'UserFirstName'; // Укажите имя пользователя
+        const lastName = 'UserLastName'; // Укажите фамилию пользователя
+
         const response = await fetch(`${API_BASE_URL}/api/save`, {
             method: 'POST',
             headers: {
@@ -59,13 +63,13 @@ async function saveUserData() {
             body: JSON.stringify({
                 telegramId: userId,
                 btcCount: count,
-                avatar: null, // Замените на код получения avatar, если доступен
-                firstName: null, // Замените на код получения firstName, если доступен
-                lastName: null // Замените на код получения lastName, если доступен
+                avatar: avatar,
+                firstName: firstName,
+                lastName: lastName
             })
         });
-        const data = await response.json();
-        console.log('User data saved:', data);
+        const userData = await response.json();
+        console.log('User data saved:', userData);
     } catch (error) {
         console.error('Error saving user data:', error);
     }
@@ -122,7 +126,7 @@ clickArea.addEventListener('click', () => {
     clickCount++;
     count += incrementValue;
 
-    // Показ сундуков раз в случайное количество кликов от 50 до 150
+    // Показ сундуков раз в случайное количество кликов от 50 до 100
     if (clickCount >= nextChestClicks) {
         clickCount = 0; // Сброс счетчика кликов
         nextChestClicks = getRandomClicks(50, 150); // Обновление количества кликов до следующего сундука
