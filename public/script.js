@@ -12,12 +12,17 @@ function getUserIdFromUrl() {
     return params.get('user_id');
 }
 
+function getUserNameFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('user_name') || 'DefaultUserName'; // Установите значение по умолчанию
+}
+
 function getRandomClicks(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 const userId = getUserIdFromUrl();
-const userName = "your_default_name"; // Здесь можно установить имя по умолчанию, если оно не будет получено из базы данных
+const userName = getUserNameFromUrl(); // Получаем имя пользователя из URL
 
 if (!userId) {
     alert("User ID not found!");
