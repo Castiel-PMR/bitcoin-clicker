@@ -22,7 +22,7 @@ function getRandomClicks(min, max) {
 }
 
 const userId = getUserIdFromUrl();
-const userName = getUserNameFromUrl(); // Получаем имя пользователя из URL
+let userName = getUserNameFromUrl(); // Получаем имя пользователя из URL
 
 if (!userId) {
     alert("User ID not found!");
@@ -65,7 +65,7 @@ async function loadUserData() {
 
 async function saveUserData() {
     try {
-        console.log('Saving user data with count:', count);
+        console.log('Saving user data with count:', count, 'and name:', userName);
         const response = await fetch(`${API_BASE_URL}/api/save`, {
             method: 'POST',
             headers: {
