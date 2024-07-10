@@ -40,7 +40,12 @@ async function loadUserData() {
             }
         });
         const userData = await response.json();
-        count = userData.btccount || 0;
+        console.log('Received user data:', userData);
+        if (userData && userData.btccount !== undefined) {
+            count = userData.btccount;
+        } else {
+            count = 0;
+        }
         counter.textContent = `BTC: ${count.toFixed(3)}`;
         console.log('User data loaded:', userData);
     } catch (error) {
@@ -50,7 +55,7 @@ async function loadUserData() {
 
 async function saveUserData() {
     try {
-        console.log('Saving user data...');
+        console.log('Saving user data with count:', count);
         const response = await fetch(`${API_BASE_URL}/api/save`, {
             method: 'POST',
             headers: {
