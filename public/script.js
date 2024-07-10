@@ -14,15 +14,11 @@ function getUserIdFromUrl() {
 
 function getUserNameFromUrl() {
     const params = new URLSearchParams(window.location.search);
-    return params.get('user_name') || 'DefaultUserName'; // Установите значение по умолчанию
-}
-
-function getRandomClicks(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    return params.get('user_name') || '';
 }
 
 const userId = getUserIdFromUrl();
-let userName = getUserNameFromUrl(); // Получаем имя пользователя из URL
+let userName = getUserNameFromUrl();
 
 if (!userId) {
     alert("User ID not found!");
@@ -36,6 +32,11 @@ const counter = document.getElementById('counter');
 const clickSound = document.getElementById('click-sound');
 const sparks = document.getElementById('sparks');
 const chestSound = new Audio('chest.mp3');
+
+// Используем Telegram WebApp API для получения имени пользователя
+if (window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe && window.Telegram.WebApp.initDataUnsafe.user) {
+    userName = window.Telegram.WebApp.initDataUnsafe.user.first_name;
+}
 
 async function loadUserData() {
     try {
